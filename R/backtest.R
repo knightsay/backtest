@@ -1,18 +1,86 @@
-################################################################################
-##
-## $Id: backtest.R 1622 2010-02-18 17:50:34Z enos $
-##
-## Result object for a backtest
-##
-################################################################################
-
-## "in.var", "ret.var", "by.var", and "date.var" are character
-## strings, often used as labels by the accessor method.  Because the
-## original data from which the backtest object was constructed is not
-## preserved, they do not refer to actual variables.  "buckets" is a
-## numeric vector of length 2, specifying the number of in.var and
-## by.var buckets.  "results" is a five dimensional array storing the
-## results of the backtest.
+#' Class \code{backtest}
+#' 
+#' \code{backtest} class contains results from the backtest function. Objects can be created by calls
+#' to the function \code{backtest(data,in.var, ret.var, ...)}.
+#' 
+#' @slot in.var is a character string which specifies the \code{in.var} values for this backtest.
+#' @slot ret.var is a character string that contains the \code{ret.var} values for this backtest.
+#' @slot by.var is a character string which contains the \code{by.var}, if specified, for this backtest. 
+#' @slot date.var is a character string containing the \code{date.var}, if specified, for this backtest. 
+#' @slot buckets is a numeric type containing the number(s) of buckets used to create quantiles from
+#'       the \code{in.var} and \code{by.var} values.
+#' @slot results is a 5-dimensional \code{vector} containing the results of the backtest.
+#' @slot ret.stats is a vector containing the returned statistics for the backtest.  
+#' @slot turnover is a vector containing turnover statistics for the backtest.
+#' @slot natural is a boolean value which states whether the intervals between observations, 
+#'       as specified by \code{date.var}, and returns, as specified by \code{ret.var}, match.  
+#'       If the interval between dates is one month, the interval between returns should also be one 
+#'       month.
+#' @slot do.spread is a boolean value. If \code{TRUE}, the \code{summary} method displays information
+#'       about the spread between the extreme quantiles. If \code{FALSE}, this information is 
+#'       suppressed.  Defaults to \code{TRUE}.
+#' @slot by.period is a boolean value. If \code{TRUE}, the quantiles are
+#'       recalculated within each date period.  If \code{FALSE}, the quantiles are
+#'       calculated all at once.  Defaults to \code{TRUE}.
+#' @slot overlaps is a numeric type which specifies
+#'       the number of prior periods to include in the current period's
+#'       portfolio weights calculation. If \code{overlaps} is the default of \code{1},
+#'       backtest behaves as usual and only uses a periods own data to
+#'       determine its portfolio.  If \code{overlaps} is set to
+#'       \code{n > 1}, a period's portfolio comprises the weighted mean of
+#'       portfolio weights from the previous n periods, with period \code{n}
+#'       having a weight of \code{1/n}.
+#' 
+#' @details The primary method for accessing the \code{backtest} results is through
+#'          the \code{summary} method.  \code{summary} provides different displays
+#'          depending on the type of \code{backtest} object.  These displays are
+#'          shown in the examples section.  Accessor methods such as \code{means},
+#'          \code{counts}, \code{marginals}, \code{naCounts}, \code{turnover}, and
+#'          \code{ci} may be used to extract other types of information from the object.
+#'          A \code{backtest} object with a \code{natural} value of TRUE may be
+#'          graphed by calling the \code{plot} method.  The default \code{plot}
+#'          method graphs return.  The other plots, turnover and
+#'          cumulative return, must be explicitly specified as \code{plot(object,
+#'          type = "turnover")} or \code{plot(object, type = "cumreturn")}.
+#'          The \code{backtest} object does not store the data frame used to create
+#'          the \code{backtest.}  It only stores the results and the names of the
+#'          vectors used in calculating these results.
+#'          The results of a \code{backtest} are stored in a 5-dimensional array,
+#'          \code{results}.  The 1st dimension contains one value for every element
+#'          of \code{ret.var}.  The 2nd dimension contains one value for
+#'          every element of \code{in.var}.  The 3rd dimension contains one value
+#'          for every element in \code{1:buckets[1]}, a vector from 1 through the
+#'          number of \code{by.var} buckets.  The 4th dimension contains one value
+#'          for every element in \code{1:buckets[2]}, a vector from 1 through the
+#'          number of \code{in.var} buckets.  The 5th dimension contains 4
+#'          elements: \code{means}, \code{counts}, \code{trim.means}, and \code{NAs}.  
+#'          
+#' @seealso \code{\link{backtest}}
+#' 
+#' @examples
+#' data(starmine)
+#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
+#' 
+#' ## Summary for a pooled backtest
+#' summary(bt)
+#' 
+#' ## A natural backtest
+#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m",
+#'                date.var = "date", id.var = "id", natural = TRUE, by.period = FALSE)
+#'                
+#' ## Summary for a natural backtest
+#' summary(bt)
+#' 
+#' ## Other access methods
+#' means(bt)
+#' counts(bt)
+#' marginals(bt)
+#' naCounts(bt)
+#' 
+#' ## Plotting methods
+#' plot(bt, type = "turnover")
+#' plot(bt, type = "return")
+#' plot(bt, type = "cumreturn")
 
 setClass("backtest", representation(in.var        = "character",
                                     ret.var       = "character",
@@ -64,6 +132,10 @@ setClass("backtest", representation(in.var        = "character",
 
 ## Lists the .vars used in the backtest
 
+
+
+#' The show method prints the variables used in this backtest.
+
 setMethod("show",
           signature(object = "backtest"),
           function(object){
@@ -90,6 +162,9 @@ setMethod("show",
 
 ## Prints a header listing the .vars, then prints the table returned
 ## by the "spreads" method
+
+
+#' The summary method prints the results of the backtest.
 
 setMethod("summary",
           signature(object = "backtest"),
@@ -159,6 +234,10 @@ setMethod("summary",
 ## to the right side of the data frame.  If a date.var is used,
 ## ".bt.mean" is called and mean summary data are attached to bottom
 ## of the data frame.
+
+
+#' The summaryStats method returns a data frame with spreads for each \code{date.var} value and each
+#' \code{in.var}.
 
 setMethod("summaryStats",
           signature(object = "backtest"),
@@ -270,8 +349,9 @@ setMethod("summaryStats",
           }
           )
 
-## Returns a list of matrices, with one matrix for each in.var,
-## containing the means data.
+
+#' The means method returns a list of matrices, with one matrix for each \code{in.var}, where the
+#' value of each cell is the mean of the returns for that \code{in.var} and \code{by.var} combination.
 
 setMethod("means",
           signature(object = "backtest"),
@@ -290,8 +370,11 @@ setMethod("means",
           }
           )
 
-## Returns a list of matrices, one matrix for each in.var, containing
-## the counts data
+
+
+#' The \code{counts} method returns a list of matrices, with one matrix for each \code{in.var}, 
+#' where the value of each cell is the number of observations for that \code{in.var} and 
+#' \code{by.var} combination.
 
 setMethod("counts",
           signature(object = "backtest"),
@@ -310,11 +393,13 @@ setMethod("counts",
           }
           )
 
-## This function computes the counts of non-NA values that went into
-## the calculation of spreads displayed by backtests's summary()
-## function. It is different from counts because it displays the sum
-## of counts from all buckets (or lowest and highest only), thus
-## allowing for output that matches the format of spreads output.
+
+#' The \code{totalCounts} method returns a data frame in the same format as the speads data frame 
+#' returned by \code{summaryStats}: contains the sum of counts for all buckets (or high and 
+#' low buckets if argument \code{low.high.only} is set to TRUE) of non-NA
+#' \code{in.var} values that went into the spread calculations. It is different from counts because 
+#' it displays the sum of counts from all buckets (or lowest and highest only), thus
+#' allowing for output that matches the format of spreads output.
 
 setMethod("totalCounts",
           signature(object = "backtest"),
@@ -331,8 +416,12 @@ setMethod("totalCounts",
           }
           )
 
-## Same as the "counts" method, except that the total counts for each
-## row and column are added to the margins.
+
+
+#' The \code{marginals} method returns a list of matrices, one matrix for each \code{in.var}, 
+#' where the value of each cell is the number of observations for that \code{in.var} and 
+#' \code{by.var} combination. Different from \code{counts} because the marginal sums have been 
+#' appended to the matrices.
 
 setMethod("marginals",
           signature(object = "backtest"),
@@ -360,8 +449,11 @@ setMethod("marginals",
           }
           )
 
-## Returns a list of matrices, one matrix for each in.var, containing
-## the NAs data
+
+
+#' The \code{naCounts} method returns a list of matrices, with one matrix for each \code{in.var}, 
+#' where the value of each cell is the number of NA observations for that \code{in.var} and 
+#' \code{by.var} combination.
 
 setMethod("naCounts",
           signature(object = "backtest"),
@@ -379,11 +471,11 @@ setMethod("naCounts",
           }
           )
 
-## Accessor Methods
 
-## Returns the turnover for natural portfolios.  Passing a "mean"
-## argument will append the mean of the turnover(s) as the last row of
-## the matrix
+
+#' The \code{turnover} method returns a \code{data.frame} of the turnovers if the \code{backtest} 
+#' is \code{natural}. Passing a \code{mean} argument will append the mean of the turnover(s) as the 
+#' last row of the matrix
 
 setMethod("turnover",
           signature(object = "backtest"),
@@ -402,9 +494,9 @@ setMethod("turnover",
           }
           )
 
-## Returns the confidence intervals for each spread if for all cases
-## except multiple in.var and a by.var or multiple in.var and multiple
-## ret.var.  Must vectorize or loop to get these.
+
+
+#' The \code{ci} method returns a matrix of confidence intervals for spreads
 
 setMethod("ci",
           signature(object = "backtest"),
@@ -421,7 +513,11 @@ setMethod("ci",
           }
           )
 
-## Plotting methods
+
+
+
+#' The \code{plot} method plots returns, cumulative returns, or turnover, when passed a \code{type} 
+#' argument of \code{return}, \code{cumreturn}, or \code{turnover}, respectively.
 
 setMethod("plot",
           signature(x = "backtest", y = "missing"),

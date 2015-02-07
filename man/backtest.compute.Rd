@@ -8,6 +8,44 @@ backtest.compute(x, in.factor, ret.var, by.var = NULL, date.var = NULL,
   natural = FALSE, by.specified = NULL, do.spread = TRUE, id.var = NULL,
   by.period = TRUE, overlaps = 1)
 }
+\arguments{
+\item{x}{is a data frame containing the data to be analysed in the backtest. See \code{details}
+for what this data frame must contain}
+
+\item{ret.var}{is a character vector which indicates the name of the column or columns in \code{x}
+to be used as return variables}
+
+\item{by.var}{is an optional character value, specifying a second variable in \code{x} to be used
+for categorising the data. See \code{details} for explanation on how categories are created}
+
+\item{date.var}{is an optional character vector which indicates the name of the column in \code{x}
+to be used as a date for each observation. \code{date.var} must be specified if
+\code{natural} is \code{TRUE}.  In order to call \code{plot}, the contents of \code{date.var}
+must be of class \code{Date} or be coercible to an object of class \code{Date} via
+\code{as.Date}}
+
+\item{natural}{is an optional boolean value.  If \code{TRUE}, the \code{summary} method returns
+additional information and the backtest object may be plotted. See details for explanations
+on how a natural backtest differs from a pooled backtest}
+
+\item{do.spread}{is a boolean value. If \code{TRUE}, the \code{summary} method displays information
+about the spread between the extreme quantiles. If \code{FALSE}, this information is
+suppressed. Defaults to \code{TRUE}.}
+
+\item{id.var}{is an optional character value which indicates the name of the column in \code{x}
+containing a unique identifier for each observation. \code{id.var} must be specified if
+\code{natural} is \code{TRUE}}
+
+\item{by.period}{is a boolean value. If \code{TRUE}, the quantiles are recalculated within each
+date period. If \code{FALSE}, the quantiles are calculated all at once. Defaults to \code{TRUE}.}
+
+\item{overlaps}{is a numeric value which specifies the number of prior periods to include in the
+       current period's portfolio weights calculation. If \code{overlaps} is the default of 1,
+       backtest behaves as usual and only uses a periods own data to determine its portfolio.
+       If \code{overlaps} is set to \code{n > 1}, a period's portfolio comprises the weighted mean
+       of portfolio weights from the previous \code{n} periods, with period \code{n} having a
+       weight of \code{1/n}.}
+}
 \value{
 a backtest object
 }

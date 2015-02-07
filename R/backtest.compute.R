@@ -2,7 +2,7 @@
 #' 
 #' \code{backtest.compute} returns a backtest object
 #' 
-#' @inheritParams backtest.function.R
+#' @inheritParams backtest
 #'
 #' @return a backtest object
 

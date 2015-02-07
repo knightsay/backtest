@@ -15,7 +15,7 @@ portfolio-based conjectures about financial instruments
 Package: \tab backtest\cr
 Type: \tab Package\cr
 Version: \tab 0.3-1\cr
-Date: \tab 2010-02-18\cr
+Date: \tab 2015-02-06\cr
 Depends: \tab R (>= 2.3.0), methods, grid, lattice\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
@@ -23,9 +23,9 @@ LazyLoad: \tab yes\cr
 
 Index:
 \preformatted{
-backtest                Creating an Object of Class Backtest
-backtest-class          Class "backtest"
-starmine                StarMine Rankings, 1995
+backtest          Creating an Object of Class Backtest
+backtest-class    Class "backtest"
+starmine          StarMine Rankings, 1995
 }
 
 Further information is available in the following vignettes:
@@ -35,11 +35,12 @@ Further information is available in the following vignettes:
 }
 \author{
 Jeff Enos <jeff@kanecap.com> and David Kane <dave@kanecap.com>,
-with contributions from Kyle Campbell
-<kyle.w.campbell@williams.edu>, Daniel Gerlanc
-<daniel@gerlanc.com>, Aaron Schwartz
-<Aaron.J.Schwartz@williams.edu>, and Daniel Suo
-<danielsuo@gmail.com>
+with contributions from 
+Kyle Campbell <kyle.w.campbell@williams.edu>, 
+Daniel Gerlanc <daniel@gerlanc.com>, 
+Aaron Schwartz <Aaron.J.Schwartz@williams.edu>, 
+Daniel Suo <danielsuo@gmail.com>, 
+Zijie Zhu <zijie.zhu@williams.edu>
 
 Maintainer: Jeff Enos <jeff@kanecap.com>
 }

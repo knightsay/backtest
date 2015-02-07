@@ -3,7 +3,7 @@
 #' \code{overlaps.compute} Calculates the weighted returns for a long-short portfolio
 #' corresponding to a backtest given the number of months a stock is held.
 #' 
-#' @inheritParams backtest.function.R
+#' @inheritParams backtest
 #' @param in.factor is the name of the vector of factors in \code{x} created
 #'        from the single \code{in.var} variable that the overlaps > 1 option allows
 #' @param overlaps is the number of months a stock is held in a portfolio

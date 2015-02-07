@@ -7,8 +7,21 @@
 overlaps.compute(x, in.factor, date.var, id.var, overlaps)
 }
 \arguments{
+\item{x}{is a data frame containing the data to be analysed in the backtest. See \code{details}
+for what this data frame must contain}
+
 \item{in.factor}{is the name of the vector of factors in \code{x} created
 from the single \code{in.var} variable that the overlaps > 1 option allows}
+
+\item{date.var}{is an optional character vector which indicates the name of the column in \code{x}
+to be used as a date for each observation. \code{date.var} must be specified if
+\code{natural} is \code{TRUE}.  In order to call \code{plot}, the contents of \code{date.var}
+must be of class \code{Date} or be coercible to an object of class \code{Date} via
+\code{as.Date}}
+
+\item{id.var}{is an optional character value which indicates the name of the column in \code{x}
+containing a unique identifier for each observation. \code{id.var} must be specified if
+\code{natural} is \code{TRUE}}
 
 \item{overlaps}{is the number of months a stock is held in a portfolio}
 }
