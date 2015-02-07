@@ -1,10 +1,4 @@
-################################################################################
-##
-## $Id: AllGenerics.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Generic functions for the backtest class
-##
-################################################################################
+#' Generic functions for the backtest class
 
 if(!isGeneric("summaryStats"))
   setGeneric("summaryStats",

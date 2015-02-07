@@ -1,17 +1,11 @@
-################################################################################
-##
-## $Id: backtest.compute.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Returns backtest class
-##
-################################################################################
+#' Returns Backtest Object
+#' 
+#' \code{backtest.compute} returns a backtest object
+#' 
+#' @inheritParams backtest.function.R
+#'
+#' @return a backtest object
 
-## Returns a backtest object. "x" is a data frame containing all raw
-## data. "buckets.var" is the bucketized version of "in.var" from
-## backtest.function.R and is assumed to be factored. "ret.var", "by.var",
-## and "date.var" are character strings corresponding to column names in
-## "x". "buckets.var" and "ret.var" can be vectors containing multiple
-## character strings. 
 
 backtest.compute <- function(x,
                              in.factor,
@@ -27,10 +21,7 @@ backtest.compute <- function(x,
  
   ## All in.var must have the same number of buckets.
   
-  if(!isTRUE(length(unique(sapply(in.factor,
-                                  function(x){
-                                    length(levels(x))
-                                  }))) == 1)){
+  if(!isTRUE(length(unique(sapply(in.factor, function(x){length(levels(x))}))) == 1)){
     stop("All in.var's must have the same number of buckets.")
   }
   

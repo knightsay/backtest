@@ -1,22 +1,27 @@
-################################################################################
-##
-## $Id: backtest.function.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Returns an object of class backtest
-##
-################################################################################
-
-## Returns a backtest object.  "x" is a data frame containing all raw
-## data.  "in.var", "ret.var", "by.var", and "date.var" are character
-## strings corresponding to column names in "x".  "in.var" and
-## "ret.var" can be vectors containing multiple character strings.
-## Only one "by.var" or "date.var" is allowed.  "date.var" currently
-## acts the same as a "by.var".  "buckets" is a numeric specifying the
-## number of buckets in which to group in.var and by.var,
-## respectively.  "universe" is an expression for selecting a subset
-## of "x".  "id.var" is only used in combination with "date.var"; it
-## is a character string corresponding to a variable in "x" to be used
-## to uniquely identify stocks across dates.
+#' Returns Backtest Object
+#' 
+#' \code{backtest.compute} returns a backtest object
+#' 
+#' @param x is a data frame containing all raw data.
+#' @param in.var is a character string or a vector of multiple character strings which correspond
+#'        to column names in the data frame \code{x}
+#' @param ret.var is a character string or a vector of multiple character strings which correspond
+#'        to column names in the data frame \code{x}
+#' @param universe is an expression for selecting a subset of the data frame \code{x}
+#' @param by.var is a character string corresponding to column names in the data frame \code{x};
+#'        only one \code{by.var} is allowed
+#' @param date.var is a character string corresponding to column names in the data frame \code{x};
+#'        only one \code{date.var} is allowed; date.var currently acts the same as a \code{by.var}
+#' @param id.var is a character string corresponding to column names in the data frame \code{x};
+#'        it is only used in combination with \code{date.var} to uniquely identify stocks across dates
+#' @param buckets is a numeric specifying the number of buckets in which to group \code{in.var} 
+#'        and \code{by.var} respectively
+#' @param natural
+#' @param do.spread
+#' @param by.period
+#' @param overlaps
+#'
+#' @return a backtest object
 
 backtest <- function(x,
                      in.var,
@@ -31,7 +36,6 @@ backtest <- function(x,
                      by.period = TRUE,
                      overlaps  = 1){
 
-  
   ## Corner Case: only one in.var of class factor allowed per backtest
   
   if(length(in.var) > 1){

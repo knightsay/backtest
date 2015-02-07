@@ -1,21 +1,14 @@
-################################################################################
-##
-## $Id: calc.turnover.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Calculates the turnover for a long-short portfolio
-## corresponding to a backtest.
-##
-################################################################################
+#' Calculates the turnover
+#' 
+#' \code{calc.turnover} Calculates the turnover for a long-short portfolio corresponding to a backtest.
+#' 
+#' @param x is a character vector of unique identifiers
+#' @param portfolio.factor is a factor created from a vector of numeric values as specified by an \code{in.var}
+#' @param date.factor is a factor created from a vector of dates as specified by \code{date.var}
+#' 
+#' @details This measure of turnover ignores price changes
+#' @return the numeric turnover
 
-## NOTE: This measure of turnover ignores price changes
-
-## "x" is a character vector of unique identifiers
-
-## "portfolio.factor" is a factor created from a vector of numeric
-##  values as specified by an in.var
-
-## "date.factor" is a factor created from a vector of dates as
-##  specified by date.var
 
 calc.turnover <- function(x, portfolio.factor, date.factor){
   
