@@ -1,10 +1,12 @@
-################################################################################
-##
-## $Id: categorize.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Returns a factor corresponding to vector "x"
-##
-################################################################################
+#' Returns a factor corresponding to vector \code{x}
+#' 
+#' \code{categorize} returns a factor corresponding to vector \code{x}
+#' 
+#' @param x is a numeric vector
+#' @param n
+#' @param is.date
+#' 
+#' @return a factor corresponding to vector \code{x}
 
 ## Not sure if we will keep the is.date parameter here.
 

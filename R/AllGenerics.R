@@ -1,5 +1,3 @@
-#' Generic functions for the backtest class
-
 if(!isGeneric("summaryStats"))
   setGeneric("summaryStats",
              function(object, ...) standardGeneric("summaryStats"))
