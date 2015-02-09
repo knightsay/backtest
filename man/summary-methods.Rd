@@ -3,7 +3,7 @@
 \docType{methods}
 \name{summary,backtest-method}
 \alias{summary,backtest-method}
-\title{Summary method}
+\title{\code{Summary} method}
 \usage{
 \S4method{summary}{backtest}(object, ...)
 }

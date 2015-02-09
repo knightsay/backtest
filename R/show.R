@@ -2,7 +2,7 @@
 #' 
 #' The \code{show} method prints a list of \code{.var} variables used in this backtest
 #' 
-#' @inheritParam summary
+#' @param object is the backtest object we want summary of
 #' 
 #' @seealso \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}
 #' 

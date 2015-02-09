@@ -14,6 +14,7 @@
 \bibliographystyle{abbrvnat}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \begin{article}
 \title{Backtests}
 \author{Kyle Campbell, Jeff Enos, Daniel Gerlanc and David Kane}

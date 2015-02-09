@@ -1,23 +1,29 @@
 #' \code{plot} method
 #' 
-#' The \code{plot} method returns plots of returns, or cumulative returns, or turnovers.
+#' The \code{plot} method returns plots of returns, or cumulative returns, or turnovers for a
+#' \code{backtest} object with \code{natural = TRUE}.
 #' 
-#' @inheritParam summary
+#' @param object is the backtest object we want summary of
 #' @param type is a character string to indicate which type of plot we want. Options are
 #'        \code{return}, \code{cumreturn}, or \code{turnover}, which correspond to
 #'        plot of returns, cumulative returns, or turnover, respectively.
 #' 
 #' @return a plot of returns, or cumulative returns, or turnovers, as the user specifies
 #' 
-#' @seealso \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}
+#' @note \code{plot} method can only plot natural backtest objects (backtest object with 
+#'       \code{natural = TRUE})
 #' 
+#' @seealso \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}
+#' @import graphics
 #' @export
 #' @docType methods
 #' @rdname plot-methods
 #'
 #' @examples
 #' data(starmine)
-#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
+#' ## A natural backtest
+#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m",
+#'                date.var = "date", id.var = "id", natural = TRUE, by.period = FALSE)
 #' plot(bt)
 
 setMethod("plot",

@@ -1,0 +1,172 @@
+\documentclass[a4paper]{report}
+\usepackage[round]{natbib}
+
+\usepackage{Rnews}
+\usepackage{fancyvrb}
+\usepackage{Sweave}  
+
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontsize=\small,fontshape=sl}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{fontsize=\small}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontsize=\small,fontshape=sl}
+
+%% \SweaveOpts{prefix.string=graphics/portfolio}
+
+\bibliographystyle{abbrvnat}
+
+\begin{document}
+\input{backtest-concordance}
+\begin{article}
+\title{Backtests}
+\author{Kyle Campbell, Jeff Enos, Daniel Gerlanc and David Kane}
+
+%%\VignetteIndexEntry{Using the backtest package}
+%%\VignetteDepends{backtest}
+
+
+\maketitle
+
+\setkeys{Gin}{width=0.95\textwidth}
+
+\section*{Introduction}
+
+The \pkg{backtest} package provides facilities for exploring
+portfolio-based conjectures about financial instruments (stocks, bonds,
+swaps, options, et cetera).  For example, consider a claim that stocks
+for which analysts are raising their earnings estimates perform better
+than stocks for which analysts are lowering estimates.  We want to
+examine if, on average, stocks with raised estimates have higher
+future returns than stocks with lowered estimates and whether this is
+true over various time horizons and across different categories of
+stocks.  Colloquially, ``backtest'' is the term used in finance for
+such tests.
+
+\section*{Background}
+To demonstrate the capabilities of the \pkg{backtest} package we will
+consider a series of examples based on a single real-world data set.
+StarMine\footnote{See www.starmine.com for details.} is a San
+Fransisco research company which creates quantitative equity models
+for stock selection.  According to the company:
+
+% Note that we make the font size for this quote small and then go
+% back to normal.
+
+\small
+
+\begin{quote}
+  StarMine Indicator is a 1-100 percentile ranking of stocks that is
+  predictive of future analyst revisions. StarMine Indicator improves
+  upon basic earnings revisions models by:
+
+\begin{itemize}
+\item Explicitly considering management guidance.
+  
+\item Incorporating SmartEstimates, StarMine's superior estimates
+  constructed by putting more weight on the most accurate analysts.
+  
+\item Using a longer-term (forward 12-month) forecast horizon (in
+  addition to the current quarter).
+
+\end{itemize}
+
+StarMine Indicator is positively correlated to future stock price
+movements. Top-decile stocks have annually outperformed bottom-decile
+stocks by 27 percentage points over the past ten years across all
+global regions.
+\end{quote}
+
+\normalsize
+
+These ranks and other attributes of stocks are in the
+\texttt{starmine} data frame, available as part of the
+\pkg{backtest} package.
+
+
+\begin{Schunk}
+\begin{Sinput}
+> data(starmine)
+> names(starmine)
+\end{Sinput}
+\begin{Soutput}
+ [1] "date"                  
+ [2] "id"                    
+ [3] "symbol"                
+ [4] "name"                  
+ [5] "country"               
+ [6] "sector"                
+ [7] "sec"                   
+ [8] "ind"                   
+ [9] "size"                  
+[10] "smi"                   
+[11] "liq"                   
+[12] "ret.0.1.m"             
+[13] "ret.0.6.m"             
+[14] "ret.1.0.m"             
+[15] "ret.6.0.m"             
+[16] "ret.12.0.m"            
+[17] "mn.dollar.volume.20.d" 
+[18] "md.dollar.volume.120.d"
+[19] "cap.usd"               
+[20] "cap"                   
+[21] "sales"                 
+[22] "net.income"            
+[23] "common.equity"         
+\end{Soutput}
+\end{Schunk}
+
+\texttt{starmine} contains selected attributes such as sector, market
+capitalisation, country, and various measures of return for a universe
+of approximately 6,000 securities.  The data is on a monthly frequency
+from January, 1995 through November, 1995.  The number of observations
+varies over time from a low of 4,528 in February to a high of 5,194 in
+November.
+
+\begin{Schunk}
+\begin{Soutput}
+      date count
+1995-01-31  4593
+1995-02-28  4528
+1995-03-31  4569
+1995-04-30  4708
+1995-05-31  4724
+1995-06-30  4748
+1995-07-31  4878
+1995-08-31  5092
+1995-09-30  5185
+1995-10-31  5109
+1995-11-30  5194
+\end{Soutput}
+\end{Schunk}
+
+The \texttt{smi} column contains the StarMine Indicator score for each
+security and date if available.  Here is a sample of rows
+and columns from the data frame:
+
+
+\begin{Schunk}
+\begin{Soutput}
+      date          name ret.0.1.m ret.0.6.m smi
+1995-01-31   Lojack Corp      0.09       0.8  96
+1995-02-28  Raymond Corp      0.05       0.1  85
+1995-02-28   Lojack Corp      0.08       0.7  90
+1995-03-31   Lojack Corp      0.15       1.0  49
+1995-08-31 Supercuts Inc     -0.11      -0.5  57
+1995-10-31   Lojack Corp     -0.40      -0.2  22
+1995-11-30   Lojack Corp      0.20       0.4  51
+\end{Soutput}
+\end{Schunk}
+
+
+Most securities (like LoJack above) have multiple entries in the data
+frame, each for a different date.  The row for Supercuts indicates
+that, as of the close of business on August 31, 1995, its \texttt{smi}
+was 57.  During the month of September, its return (i.e.,
+\texttt{ret.0.1.m}) was -11\%.
+
+\section*{A simple backtest}
+
+Backtests are run by calling the function \texttt{backtest} to
+produce an object of class \texttt{backtest}.
+
+\begin{Schunk}
+\begin{Sinput}
+> bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)

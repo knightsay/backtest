@@ -15,9 +15,9 @@ The primary method for accessing the \code{backtest} results is through
          shown in the examples section.  Accessor methods such as \code{means},
          \code{counts}, \code{marginals}, \code{naCounts}, \code{turnover}, and
          \code{ci} may be used to extract other types of information from the object.
-         A \code{backtest} object with a \code{natural} value of TRUE may be
+         A \code{backtest} object with a \code{natural} value of \code{TRUE} may be
          graphed by calling the \code{plot} method.  The default \code{plot}
-         method graphs return.  The other plots, turnover and
+         method graphs return plot.  The other plots, turnover and
          cumulative return, must be explicitly specified as \code{plot(object,
          type = "turnover")} or \code{plot(object, type = "cumreturn")}.
          The \code{backtest} object does not store the data frame used to create
@@ -101,6 +101,6 @@ plot(bt, type = "return")
 plot(bt, type = "cumreturn")
 }
 \seealso{
-\code{\link{backtest}}
+\code{\link{backtest}} \code{\link{summary}}
 }
 

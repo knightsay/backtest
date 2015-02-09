@@ -3,7 +3,7 @@
 #' The \code{summaryStats} method returns a data frame with spreads for each \code{date.var} value and each
 #' \code{in.var}.
 #' 
-#' @inheritParam summary
+#' @param object is the backtest object we want summary of
 #' @param mean is a boolean value for whether to return a table of means by calling \code{.bt.mean}
 #' 
 #' @return a data frame summarizing the results of the backtest.  The entries of the data frame 

@@ -39,7 +39,7 @@
 #'          \code{ci} may be used to extract other types of information from the object.
 #'          A \code{backtest} object with a \code{natural} value of \code{TRUE} may be
 #'          graphed by calling the \code{plot} method.  The default \code{plot}
-#'          method graphs return.  The other plots, turnover and
+#'          method graphs return plot.  The other plots, turnover and
 #'          cumulative return, must be explicitly specified as \code{plot(object,
 #'          type = "turnover")} or \code{plot(object, type = "cumreturn")}.
 #'          The \code{backtest} object does not store the data frame used to create
@@ -56,7 +56,7 @@
 #'          elements: \code{means}, \code{counts}, \code{trim.means}, and \code{NAs}.  
 #'          
 #' @seealso \code{\link{backtest}} \code{\link{summary}}
-#' 
+#' @export
 #' @examples
 #' data(starmine)
 #' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
@@ -132,6 +132,7 @@ setClass("backtest", representation(in.var        = "character",
 
 #' The means method returns a list of matrices, with one matrix for each \code{in.var}, where the
 #' value of each cell is the mean of the returns for that \code{in.var} and \code{by.var} combination.
+#' @export
 
 setMethod("means",
           signature(object = "backtest"),
@@ -155,6 +156,7 @@ setMethod("means",
 #' The \code{counts} method returns a list of matrices, with one matrix for each \code{in.var}, 
 #' where the value of each cell is the number of observations for that \code{in.var} and 
 #' \code{by.var} combination.
+#' @export
 
 setMethod("counts",
           signature(object = "backtest"),
@@ -180,6 +182,7 @@ setMethod("counts",
 #' \code{in.var} values that went into the spread calculations. It is different from counts because 
 #' it displays the sum of counts from all buckets (or lowest and highest only), thus
 #' allowing for output that matches the format of spreads output.
+#' @export
 
 setMethod("totalCounts",
           signature(object = "backtest"),
@@ -202,6 +205,7 @@ setMethod("totalCounts",
 #' where the value of each cell is the number of observations for that \code{in.var} and 
 #' \code{by.var} combination. Different from \code{counts} because the marginal sums have been 
 #' appended to the matrices.
+#' @export
 
 setMethod("marginals",
           signature(object = "backtest"),
@@ -234,6 +238,7 @@ setMethod("marginals",
 #' The \code{naCounts} method returns a list of matrices, with one matrix for each \code{in.var}, 
 #' where the value of each cell is the number of NA observations for that \code{in.var} and 
 #' \code{by.var} combination.
+#' @export
 
 setMethod("naCounts",
           signature(object = "backtest"),
@@ -256,6 +261,7 @@ setMethod("naCounts",
 #' The \code{turnover} method returns a \code{data.frame} of the turnovers if the \code{backtest} 
 #' is \code{natural}. Passing a \code{mean} argument will append the mean of the turnover(s) as the 
 #' last row of the matrix
+#' @export
 
 setMethod("turnover",
           signature(object = "backtest"),
@@ -277,6 +283,7 @@ setMethod("turnover",
 
 
 #' The \code{ci} method returns a matrix of confidence intervals for spreads
+#' @export
 
 setMethod("ci",
           signature(object = "backtest"),

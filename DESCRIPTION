@@ -15,7 +15,11 @@ Description: The backtest package provides facilities for exploring
         portfolio-based conjectures about financial instruments
         (stocks, bonds, swaps, options, et cetera).
 Maintainer: Daniel Gerlanc <dgerlanc@enplusadvisors.com>
-Depends: R (>= 2.10), methods, grid, lattice
+Depends: R (>= 2.10)
+Imports:
+    methods,
+    grid,
+    lattice
 License: GPL (>= 2)
 LazyLoad: yes
 

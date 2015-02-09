@@ -63,7 +63,7 @@
 #'         returned by \code{backtest}.
 #'
 #' @seealso \code{\link{backtest-class}}
-#'         
+#' @export
 #' @examples
 #' data(starmine)
 #' 
