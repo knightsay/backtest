@@ -279,23 +279,3 @@ setMethod("turnover",
 
           }
           )
-
-
-
-#' The \code{ci} method returns a matrix of confidence intervals for spreads
-#' @export
-
-setMethod("ci",
-          signature(object = "backtest"),
-          function(object){
-            
-##          array(dim = c(1, length(object@ret.var), length(object@in.var)))
-
-            if((length(object@in.var) == 1 && length(object@ret.var) == 1)
-               || (length(object@in.var) == 1 && length(object@ret.var > 1))){
-              
-              summaryStats(object)[, c("CI(low)", "spread", "CI(high)")]
-            }
-            
-          }
-          )
