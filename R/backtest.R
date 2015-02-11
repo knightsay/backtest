@@ -130,27 +130,6 @@ setClass("backtest", representation(in.var        = "character",
          }
          )
 
-#' The means method returns a list of matrices, with one matrix for each \code{in.var}, where the
-#' value of each cell is the mean of the returns for that \code{in.var} and \code{by.var} combination.
-#' @export
-
-setMethod("means",
-          signature(object = "backtest"),
-          function(object){
-
-            mean.list <- list()
-
-            for(i in object@in.var){
-              mean.list <- append(mean.list,
-                                  list(object@results[ ,i, , ,"means"]))
-            }
-
-            names(mean.list) <- object@in.var
-            
-            mean.list
-          }
-          )
-
 
 
 #' The \code{counts} method returns a list of matrices, with one matrix for each \code{in.var}, 

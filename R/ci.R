@@ -1,9 +1,10 @@
-#' Confidence Interval
+#' \code{ci} Method for Confidence Interval
 #' 
 #' The \code{ci} method returns a matrix of confidence intervals for spreads
 #' 
 #' @param object is the backtest object to work on
 #' 
+#' @return a matrix of confidence intervals for spreads
 #' @seealso \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}
 #' 
 #' @export
