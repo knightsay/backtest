@@ -11,7 +11,9 @@
 \item{object}{is the backtest object we want mean of returns of}
 }
 \value{
-a list of matrices of mean of returns
+a list of matrices, with one matrix for each \code{in.var}, where the
+        value of each cell is the mean of the returns for that \code{in.var} and \code{by.var}
+        combination.
 }
 \description{
 The \code{means} method returns a list of matrices which show the mean of returns
@@ -20,8 +22,6 @@ The \code{means} method returns a list of matrices which show the mean of return
 data(starmine)
 bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
 means(bt)
-The means method returns a list of matrices, with one matrix for each \\code{in.var}, where the
-value of each cell is the mean of the returns for that \\code{in.var} and \\code{by.var} combination.
 }
 \seealso{
 \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}

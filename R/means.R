@@ -4,7 +4,9 @@
 #' 
 #' @param object is the backtest object we want mean of returns of
 #' 
-#' @return a list of matrices of mean of returns
+#' @return a list of matrices, with one matrix for each \code{in.var}, where the
+#'         value of each cell is the mean of the returns for that \code{in.var} and \code{by.var} 
+#'         combination.
 #' @seealso \code{\link{backtest}} and \code{\link{backtest-class}} and \code{\link{summary}}
 #' 
 #' @export
@@ -15,10 +17,6 @@
 #' data(starmine)
 #' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
 #' means(bt)
-
-#' The means method returns a list of matrices, with one matrix for each \code{in.var}, where the
-#' value of each cell is the mean of the returns for that \code{in.var} and \code{by.var} combination.
-#' @export
 
 setMethod("means",
           signature(object = "backtest"),
