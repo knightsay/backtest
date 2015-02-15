@@ -19,7 +19,8 @@ Depends: R (>= 2.10)
 Imports:
     methods,
     grid,
-    lattice
+    lattice,
+    testthat
 License: GPL (>= 2)
 LazyLoad: yes
 
