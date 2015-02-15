@@ -10,7 +10,8 @@ Author: Jeff Enos <jeff@kanecap.com> and David Kane <dave@kanecap.com>,
         <daniel@gerlanc.com>, Aaron Schwartz
         <Aaron.J.Schwartz@williams.edu>, Daniel Suo
         <danielsuo@gmail.com>, Alexei Colin <acolin@fas.harvard.edu>,
-        and Luyi Zhao <luyizhao@gmail.com>
+        Luyi Zhao <luyizhao@gmail.com>,
+        and Zijie Zhu <zijie.zhu@williams.edu>
 Description: The backtest package provides facilities for exploring
         portfolio-based conjectures about financial instruments
         (stocks, bonds, swaps, options, et cetera).

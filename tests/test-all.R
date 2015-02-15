@@ -1,4 +1,4 @@
 library(testthat)
-library("backtest")
+library(backtest)
 
 test_check("backtest")
