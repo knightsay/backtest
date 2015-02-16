@@ -23,14 +23,13 @@ test_that("test for backtest.function", {
   bt.7 <- backtest(x, id.var = "id", in.var = "in.var.1", ret.var = "ret.var.1", by.period = FALSE, 
                    date.var = "date", overlaps = 2)
   
-  expect_true(all.equal(truth.1, as.numeric(bt.1@results[1,1 , , ,"means"])),
-              all(mapply(all.equal, truth.2, bt.2@results[1,1 , , ,"means"])),
-              all(mapply(all.equal, truth.3, bt.3@results[1,1 , , ,"means"])),
-              all(mapply(all.equal, truth.4.A, bt.4@results["ret.var.1","in.var.1", , ,"means"])),
-              all(mapply(all.equal, truth.4.B, bt.4@results["ret.var.1","in.var.2", , ,"means"])),
-              all(mapply(all.equal, truth.5, bt.5@results[1,1 , , ,"means"])),
-              all(mapply(all.equal, truth.6, bt.6@results[1,1 , , ,"means"]))
-  )
+  expect_true(all.equal(truth.1, as.numeric(bt.1@results[1,1 , , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.2, bt.2@results[1,1 , , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.3, bt.3@results[1,1 , , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.4.A, bt.4@results["ret.var.1","in.var.1", , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.4.B, bt.4@results["ret.var.1","in.var.2", , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.5, bt.5@results[1,1 , , ,"means"])))
+  expect_true(all(mapply(all.equal, truth.6, bt.6@results[1,1 , , ,"means"])))
 })  
 
 

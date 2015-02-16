@@ -5,7 +5,7 @@ library("backtest")
 test_that("Test-case for bucketize", {
 
   load("bucketize.test.RData")
-  load("buckeize.test2.RData")
+  load("bucketize.test2.RData")
   
   ## save(tmp.1, tmp.1.x, tmp.1.y, truth.1, file = "bucketize.test.RData", compress = TRUE)
   
