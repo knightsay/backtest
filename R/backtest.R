@@ -130,50 +130,6 @@ setClass("backtest", representation(in.var        = "character",
          }
          )
 
-#' The \code{totalCounts} method returns a data frame in the same format as the speads data frame 
-#' returned by \code{summaryStats}: contains the sum of counts for all buckets (or high and 
-#' low buckets if argument \code{low.high.only} is set to TRUE) of non-NA
-#' \code{in.var} values that went into the spread calculations. It is different from counts because 
-#' it displays the sum of counts from all buckets (or lowest and highest only), thus
-#' allowing for output that matches the format of spreads output.
-#' @export
-
-setMethod("totalCounts",
-          signature(object = "backtest"),
-          function(object, low.high.only = FALSE){
-
-            counts <- data.frame(do.call("cbind",
-                        lapply(counts(object), function(x){
-                          if(isTRUE(low.high.only))
-                            x <- x[c("low", "high")]
-                          rowSums(x)
-                        })))
-            
-            counts
-          }
-          )
-
-#' The \code{naCounts} method returns a list of matrices, with one matrix for each \code{in.var}, 
-#' where the value of each cell is the number of NA observations for that \code{in.var} and 
-#' \code{by.var} combination.
-#' @export
-
-setMethod("naCounts",
-          signature(object = "backtest"),
-          function(object){
-
-            na.list <- list()
-
-            for(i in object@in.var){
-              na.list <- append(na.list, list(object@results[ ,i, , ,"NAs"]))
-           } 
-            
-            names(na.list) <- object@in.var
-            
-            na.list
-          }
-          )
-
 ## ".bt.mean" calculates the means by column and returns a
 ## 1 x length(x) array where the values are the means
 ## of the columns.

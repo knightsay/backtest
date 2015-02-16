@@ -16,10 +16,9 @@
 #'
 #' @examples
 #' data(starmine)
-#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
+#' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE, natural = TRUE,
+#'                date.var = "date", id.var = "id")
 #' turnover(bt)
-#' 
-#' @export
 
 setMethod("turnover",
           signature(object = "backtest"),
