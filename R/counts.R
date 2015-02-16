@@ -17,7 +17,6 @@
 #' data(starmine)
 #' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
 #' counts(bt)
-#' @export
 
 setMethod("counts",
           signature(object = "backtest"),

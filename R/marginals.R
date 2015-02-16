@@ -17,8 +17,6 @@
 #' data(starmine)
 #' bt <- backtest(starmine, in.var = "smi", ret.var = "ret.0.1.m", by.period = FALSE)
 #' marginals(bt)
-#' 
-#' @export
 
 setMethod("marginals",
           signature(object = "backtest"),
