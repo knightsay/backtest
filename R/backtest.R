@@ -130,31 +130,6 @@ setClass("backtest", representation(in.var        = "character",
          }
          )
 
-
-
-#' The \code{counts} method returns a list of matrices, with one matrix for each \code{in.var}, 
-#' where the value of each cell is the number of observations for that \code{in.var} and 
-#' \code{by.var} combination.
-#' @export
-
-setMethod("counts",
-          signature(object = "backtest"),
-          function(object){
-
-            count.list <- list()
-            
-            for(i in object@in.var){
-              count.list <- append(count.list,
-                                   list(object@results[1,i, , ,"counts"]))
-            }
-            
-            names(count.list) <- object@in.var
-
-            count.list
-          }
-          )
-
-
 #' The \code{totalCounts} method returns a data frame in the same format as the speads data frame 
 #' returned by \code{summaryStats}: contains the sum of counts for all buckets (or high and 
 #' low buckets if argument \code{low.high.only} is set to TRUE) of non-NA
@@ -178,42 +153,6 @@ setMethod("totalCounts",
           }
           )
 
-
-
-#' The \code{marginals} method returns a list of matrices, one matrix for each \code{in.var}, 
-#' where the value of each cell is the number of observations for that \code{in.var} and 
-#' \code{by.var} combination. Different from \code{counts} because the marginal sums have been 
-#' appended to the matrices.
-#' @export
-
-setMethod("marginals",
-          signature(object = "backtest"),
-          function(object){
-
-            body <- counts(object)
-
-            for(i in 1:length(body)){
-              
-              if(is.null(dim(body[[i]]))){
-                total <- sum(body[[i]], na.rm = TRUE)
-                body[[i]] <- append(body[[i]], total)
-                names(body[[i]])[length(body[[i]])] <- "TOTAL"
-              }
-              else{
-                total <- rowSums(body[[i]], na.rm = TRUE)
-                body[[i]] <- cbind(body[[i]], TOTAL = total)  
-                
-                total <- colSums(body[[i]], na.rm = TRUE)
-                body[[i]] <- rbind(body[[i]], TOTAL = total)
-              }
-            }
-           
-            body
-          }
-          )
-
-
-
 #' The \code{naCounts} method returns a list of matrices, with one matrix for each \code{in.var}, 
 #' where the value of each cell is the number of NA observations for that \code{in.var} and 
 #' \code{by.var} combination.
@@ -232,30 +171,6 @@ setMethod("naCounts",
             names(na.list) <- object@in.var
             
             na.list
-          }
-          )
-
-
-
-#' The \code{turnover} method returns a \code{data.frame} of the turnovers if the \code{backtest} 
-#' is \code{natural}. Passing a \code{mean} argument will append the mean of the turnover(s) as the 
-#' last row of the matrix
-#' @export
-
-setMethod("turnover",
-          signature(object = "backtest"),
-          function(object, mean = FALSE){
-            
-            if(!isTRUE(object@natural)){
-              stop("Cannot calculate turnover if not a natural backtest.")
-            }
-
-            if(isTRUE(mean)){
-              return(rbind(object@turnover, .bt.mean(turnover(object))))
-            }
-
-            object@turnover
-
           }
           )
 
