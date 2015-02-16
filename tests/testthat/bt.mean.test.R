@@ -1,17 +1,13 @@
-################################################################################
-##
-## $Id: bt.mean.test.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Tests for function "bt.mean"
-##
-################################################################################
+context("Test for bt.mean")
 
-library(backtest)
+library("backtest")
+
+test_that("Tests for function bt.mean", {
 
 load("bt.mean.test.RData")
 
 ## save(x, truth, file = "bt.mean.test.RData", compress = TRUE)
 
-stopifnot(
-          isTRUE(all.equal(backtest:::.bt.mean(x), truth))
-        )
+expect_true(all.equal(backtest:::.bt.mean(x), truth))
+
+})

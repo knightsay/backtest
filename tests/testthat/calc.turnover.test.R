@@ -1,12 +1,8 @@
-################################################################################
-##
-## $Id: calc.turnover.test.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Tests for function "calc.turnover"
-##
-################################################################################
+context("Test for calc.turnover")
 
-library(backtest)
+library("backtest")
+
+test_that("Test-case for calc.turnover", {
 
 load("calc.turnover.test.RData")
 
@@ -14,6 +10,5 @@ load("calc.turnover.test.RData")
 
 x.result <- backtest:::calc.turnover(x.id, x.bucket, x.date)
 
-stopifnot(
-          isTRUE(all.equal(x.result, x.truth))
-          )
+expect_true(all.equal(x.result, x.truth))
+})

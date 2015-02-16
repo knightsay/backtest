@@ -1,19 +1,18 @@
-################################################################################
-##
-## $Id: bucketize.test.R 1300 2008-08-27 21:01:11Z zhao $
-##
-## Tests for function "bucketize"
-##
-################################################################################
+context("Test for bucketize")
 
-library(backtest)
+library("backtest")
 
-load("bucketize.test.RData")
+test_that("Test-case for bucketize", {
 
-## save(tmp.1, tmp.1.x, tmp.1.y, truth.1, file = "bucketize.test.RData", compress = TRUE)
+  load("bucketize.test.RData")
+  load("buckeize.test2.RData")
+  
+  ## save(tmp.1, tmp.1.x, tmp.1.y, truth.1, file = "bucketize.test.RData", compress = TRUE)
+  
+  result.1 <- backtest:::bucketize(tmp.1, tmp.1.x, tmp.1.y, compute = length)## save(tmp.2, tmp.2.x, tmp.2.y, truth.2, file = "bucketize.test2.RData")
+  result.2 <- backtest:::bucketize(tmp.2, tmp.2.x, tmp.2.y, compute = mean)
+  
+  expect_true(all.equal(result.1, truth.1))
+  expect_true(all.equal(result.2, truth.2))
 
-result.1 <- backtest:::bucketize(tmp.1, tmp.1.x, tmp.1.y, compute = length)
-
-stopifnot(
-          isTRUE(all.equal(result.1, truth.1))
-        )
+})
