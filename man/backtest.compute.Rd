@@ -12,6 +12,8 @@ backtest.compute(x, in.factor, ret.var, by.var = NULL, date.var = NULL,
 \item{x}{is a data frame containing the data to be analysed in the backtest. See \code{details}
 for what this data frame must contain}
 
+\item{in.factor}{}
+
 \item{ret.var}{is a character vector which indicates the name of the column or columns in \code{x}
 to be used as return variables}
 
@@ -27,6 +29,8 @@ must be of class \code{Date} or be coercible to an object of class \code{Date} v
 \item{natural}{is an optional boolean value.  If \code{TRUE}, the \code{summary} method returns
 additional information and the backtest object may be plotted. See details for explanations
 on how a natural backtest differs from a pooled backtest}
+
+\item{by.specified}{}
 
 \item{do.spread}{is a boolean value. If \code{TRUE}, the \code{summary} method displays information
 about the spread between the extreme quantiles. If \code{FALSE}, this information is

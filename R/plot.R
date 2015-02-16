@@ -3,10 +3,11 @@
 #' The \code{plot} method returns plots of returns, or cumulative returns, or turnovers for a
 #' \code{backtest} object with \code{natural = TRUE}.
 #' 
-#' @param object is the backtest object we want summary of
+#' @param x is the backtest object we want summary of
 #' @param type is a character string to indicate which type of plot we want. Options are
 #'        \code{return}, \code{cumreturn}, or \code{turnover}, which correspond to
 #'        plot of returns, cumulative returns, or turnover, respectively.
+#' @param ... additional value to pass on
 #' 
 #' @return a plot of returns, or cumulative returns, or turnovers, as the user specifies
 #' 
@@ -27,7 +28,7 @@
 #' plot(bt)
 
 setMethod("plot",
-          signature(x = "backtest", y = "missing"),
+          signature(x = "backtest", y = "missing"), ## what does "missing" mean here?
           function(x, type = "return", ...){
             
             if(!x@natural){

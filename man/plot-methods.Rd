@@ -8,11 +8,13 @@
 \S4method{plot}{backtest,missing}(x, type = "return", ...)
 }
 \arguments{
-\item{type}{is a character string to indicate which type of plot we want. Options are
-       \code{return}, \code{cumreturn}, or \code{turnover}, which correspond to
-       plot of returns, cumulative returns, or turnover, respectively.}
+\item{x}{is the backtest object we want summary of}
 
-\item{object}{is the backtest object we want summary of}
+\item{type}{is a character string to indicate which type of plot we want. Options are
+\code{return}, \code{cumreturn}, or \code{turnover}, which correspond to
+plot of returns, cumulative returns, or turnover, respectively.}
+
+\item{...}{additional value to pass on}
 }
 \value{
 a plot of returns, or cumulative returns, or turnovers, as the user specifies

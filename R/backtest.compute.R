@@ -3,6 +3,8 @@
 #' \code{backtest.compute} returns a backtest object
 #' 
 #' @inheritParams backtest
+#' @param in.factor
+#' @param by.specified
 #'
 #' @return a backtest object
 
@@ -132,7 +134,8 @@ backtest.compute <- function(x,
   invisible(new("backtest", in.var = colnames(in.factor), ret.var = ret.var, by.var =
                 as.character(by.specified), date.var = as.character(date.var),
                 buckets = buckets, results = results, ret.stats = ret.stats,
-                turnover = turnover, natural = natural, do.spread = do.spread, by.period = by.period, overlaps = overlaps))
+                turnover = turnover, natural = natural, do.spread = do.spread, by.period = by.period, 
+                overlaps = overlaps))
 
 }
 

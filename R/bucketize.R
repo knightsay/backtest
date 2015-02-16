@@ -7,7 +7,7 @@
 #' @param x is a numeric vector
 #' @param x.factor is a factor for \code{x}
 #' @param y.factor is a factor for \code{x}
-#' @param compute
+#' @param compute compute
 #' @param ... additional arguments to be passed on
 #' 
 #' @return a two-dimensional array of the results, with the levels of \code{x.factor} 

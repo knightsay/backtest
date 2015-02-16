@@ -9,9 +9,9 @@ categorize(x, n, is.date = FALSE)
 \arguments{
 \item{x}{is a numeric vector}
 
-\item{n}{}
+\item{n}{is the denominator of the increase factor}
 
-\item{is.date}{}
+\item{is.date}{boolean value}
 }
 \value{
 a factor corresponding to vector \code{x}

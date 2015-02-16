@@ -13,7 +13,7 @@ bucketize(x, x.factor, y.factor, compute, ...)
 
 \item{y.factor}{is a factor for \code{x}}
 
-\item{compute}{}
+\item{compute}{compute}
 
 \item{...}{additional arguments to be passed on}
 }
