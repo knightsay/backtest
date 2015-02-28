@@ -32,7 +32,7 @@
 #'        date period. If \code{FALSE}, the quantiles are calculated all at once. Defaults to \code{TRUE}.
 #' @param overlaps is a numeric value which specifies the number of prior periods to include in the 
 #'        current period's portfolio weights calculation. If \code{overlaps} is the default of 1,
-#'        backtest behaves as usual and only uses a periods own data to determine its portfolio.  
+#'        backtest behaves as usual and only uses a period's own data to determine its portfolio.  
 #'        If \code{overlaps} is set to \code{n > 1}, a period's portfolio comprises the weighted mean 
 #'        of portfolio weights from the previous \code{n} periods, with period \code{n} having a 
 #'        weight of \code{1/n}.

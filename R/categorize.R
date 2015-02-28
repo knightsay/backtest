@@ -9,6 +9,7 @@
 #' @return a factor corresponding to vector \code{x}
 
 ## Not sure if we will keep the is.date parameter here.
+## What does is.date do here?
 
 categorize <- function(x, n, is.date = FALSE){
   

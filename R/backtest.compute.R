@@ -3,7 +3,7 @@
 #' \code{backtest.compute} returns a backtest object
 #' 
 #' @inheritParams backtest
-#' @param in.factor
+#' @param in.factor is the \code{in.var} of \code{x} transformed by \code{backtest} into factors.
 #' @param by.specified
 #'
 #' @return a backtest object
