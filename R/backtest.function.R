@@ -258,7 +258,8 @@ backtest <- function(x,
   }
   
   ## Evaluate "universe"
-  
+  ## don't have to go into details of this code; just check 'universe's
+  ## documentation above and understand what's it for
   if(!missing(universe)){
     univ <- eval(substitute(universe), x, parent.frame())
     univ <- univ & !is.na(univ)
@@ -268,7 +269,7 @@ backtest <- function(x,
   ## Attach "by.var" factor to "x"
   
   if(is.null(by.var)){
-    x$by.factor <- rep(factor(1), times=nrow(x))
+    x$by.factor <- factor(1)
   }
   else{
     if(is.null(date.var)){
@@ -281,25 +282,24 @@ backtest <- function(x,
   
   ## Factor a character in.var
   
-  if(length(in.var) == 1 && is.character(x[in.var]))
-    x[in.var] <- as.factor(x[in.var])
+  if(length(in.var) == 1 && is.character(x[in.var])){
+      x[in.var] <- as.factor(x[in.var])
+  }
   
   ## Make sure in.var is a factor / factorized... by looping over in.var
-  
+  ## I think the below is poorly done. Can't we just use a certain command to 
+  ## coerce all to be factors or a command to factorize all entries?
   in.factor <- data.frame(array(dim = c(nrow(x), length(in.var)), dimnames = list(NULL,in.var)))
   
   ## Intialize weights
-  
   x$weight <- 1
   
   ## Build buckets
-  
   for(i in in.var){
     
     ## If in.var is not a factor (is numeric)
-
     if(!is.factor(x[[i]])){
-      
+      ## we should explain what this huge pile of messy code is doing?
       if(by.period && !all(tapply(x[[i]], x[[date.var]],
                                           function(x){
                                             if(sum(!is.na(x)) < buckets[1]){
@@ -308,13 +308,12 @@ backtest <- function(x,
                                             return(TRUE)
                                           }
                                           )
-                                   )
-         ){
+                                   )){
         stop("Not enough observations to fill each bucket by period.")
       }
       
       ## If we are doing by period, form buckets for every date 
-
+      ## we should explain what this huge pile of messy code is doing?
       if(by.period){
         in.factor[[i]] <- as.factor(unsplit(lapply(split(x[[i]], x[[date.var]]),
                                                    function(x){
@@ -324,13 +323,13 @@ backtest <- function(x,
       }
       
       ## If we are not doing by period bucketizing, form all buckets simultaneously
-
+      ## so before reading this code, understand categorize
       else{
         in.factor[[i]] <- categorize(x[[i]], n = buckets[1])
       }
       
       
-      ## Name levels, the lowest bucket is the short part of the
+      ## Rename levels, the lowest bucket is the short part of the
       ## portfolio, the highest bucket is the long part      
 
       levels(in.factor[[i]])[1]          <- "low"
@@ -345,16 +344,19 @@ backtest <- function(x,
       }
           
       ## Recalculate weights based on overlaps
-
+      ## PAY ATTENTION OVERLAPPING PORTFOLIO GROUP: This is where we come in here
+      ## but main change should happen in overlaps.compute
+      
       if(overlaps > 1){
         levels(in.factor[[i]])[1]                  <- "low"
         levels(in.factor[[i]])[buckets[1]]         <- "high"
+        ## rename to "mid" all levels that are not low or high 
         levels(in.factor[[i]])[2:(buckets[1] - 1)] <- "mid"
-
+        ## create a new column name
         in.factor.col <- paste("in.factor.", i, sep = "")
-        
+        ## create a new column in x
         x[[in.factor.col]] <- in.factor[[i]]
-        
+        ## The below command does not work. Check overlaps.commute
         x <- overlaps.compute(x, in.factor.col, date.var, id.var, overlaps)
       }
     }
