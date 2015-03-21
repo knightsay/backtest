@@ -8,7 +8,7 @@ Current To-Do List:
 
 - Later: Create test cases of big data sets using ws.data package. Function to ws.data package: install.packages("ws.data", contriburl = "http://www.kanecap.com/R", type = "source")
 
-- Later: Improve documentations
+- Later: xts & shiny? (Improve documentations)
 
 - Later: Do the following items on the original To-Do List
 
