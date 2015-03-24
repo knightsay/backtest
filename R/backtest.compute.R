@@ -22,6 +22,8 @@ backtest.compute <- function(x,
                              overlaps     = 1){
  
   ## All in.var must have the same number of buckets.
+  temp.in.factor = in.factor
+  print(dim(x))
   
   if(!isTRUE(length(unique(sapply(in.factor, function(x){length(levels(x))}))) == 1)){
     stop("All in.var's must have the same number of buckets.")
@@ -38,7 +40,7 @@ backtest.compute <- function(x,
   }
   
   ## Creating names
-  
+  ## create names for what?...
   by.names <- levels(x$by.factor)
   	
   ## Create array for storing turnover.  Dimensions signify:
@@ -48,37 +50,38 @@ backtest.compute <- function(x,
   if(natural){
     turnover <- array(dim = c(length(levels(x$by.factor)), length(colnames(in.factor))),
                       dimnames = list(levels(x$by.factor), colnames(in.factor)))
-  }
-  else
+  }  else{
     turnover <- array()
-    
+  }
+  
   ## Construct the empty array.  The dimensions are ordered as follows:
   ## 1: ret.var(s)
-  ## 2: in.var(s)
+  ## 2: in.var(s)  
   ## 3: by.var buckets
   ## 4: in.var buckets
   ## 5: means/counts/trim.means/NAs
 
   results <- array(dim = c(length(ret.var), length(colnames(in.factor)),
-                     length(levels(x$by.factor)), buckets, 4), 
+                           length(levels(x$by.factor)), buckets, 4), 
                    dimnames = list(ret.var, colnames(in.factor), by.names,
                      levels(in.factor[[1]]), c("means", "counts", "trim.means", "NAs")))
                      
-  ## Construct ret.stats array
+  ## Construct ret.stats array -- stats to return
   
   ret.stats <- array(dim = c(length(ret.var), 6), dimnames =
                      list(ret.var, c("min", "max", "mean", "median",
                                      "sd", "NA")))                     
   for(r in ret.var){
 
-    ## Trim most extreme .5% of ret.var values
-
+    ## Trim out the most extreme 0.5% of ret.var values in x
+    print(dim(x))
     x[[r]] <- x[[r]] * x[["weight"]]
     trim.range <- quantile(x[[r]], c(0.0025, 0.9975), na.rm = TRUE)
-      
+    
+    ## apply trim.range to x and in.factor
     trim.x <- subset(x, trim.range[[1]] < x[[r]] &
                                x[[r]] < trim.range[[2]])
- 
+    
     trim.in.factor <- subset(in.factor, trim.range[[1]] < x[[r]] &
                                x[[r]] < trim.range[[2]])
 
@@ -92,13 +95,17 @@ backtest.compute <- function(x,
     ret.stats[r,"NA"]     <- sum(is.na(x[[r]]))
 
     ## Select in.var
-    for(i in colnames(in.factor)){
+    i = colnames(in.factor)
 
+      print("problem starts!")
+      print(length(temp.in.factor[[i]]))
+      
       ## Bucketize means
  
-      results[r,i, , ,"means"] <- bucketize(x[[r]], x.factor = in.factor[[i]],
+      results[r,i, , ,"means"] <- bucketize(x[[r]], x.factor = temp.in.factor[[i]],
                                             y.factor = x$by.factor,
                                             compute = weighted.mean, na.rm = TRUE)
+      print("problem solved?")
       
       ## Bucketize counts
       
@@ -126,7 +133,7 @@ backtest.compute <- function(x,
                                        portfolio.factor = in.factor[[i]],
                                        date.factor = x$by.factor)
       }
-    }
+    
   }
     
   ## Create and return backtest object

@@ -4,18 +4,18 @@
 \alias{bucketize}
 \title{Constructs a summary data frame}
 \usage{
-bucketize(x, x.factor, y.factor, compute, ...)
+bucketize(xr, x.factor, y.factor, compute, ...)
 }
 \arguments{
-\item{x}{is a numeric vector}
-
 \item{x.factor}{is a factor for \code{x}}
 
 \item{y.factor}{is a factor for \code{x}}
 
-\item{compute}{compute}
+\item{compute}{is a function to apply on the list}
 
 \item{...}{additional arguments to be passed on}
+
+\item{x}{is a numeric vector}
 }
 \value{
 a two-dimensional array of the results, with the levels of \code{x.factor}

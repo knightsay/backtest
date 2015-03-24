@@ -181,8 +181,7 @@ backtest <- function(x,
 
   if(is.null(by.var)){
     buckets[2] <- 1
-  }
-  else{
+  }  else{
     if(length(buckets) == 1){
       buckets[2] <- buckets[1]
     }
@@ -246,13 +245,13 @@ backtest <- function(x,
   by.specified <- by.var
 
   ## Use by.var or date.var?
+  ## Can we just get rid of date.
   
   if(!is.null(date.var)){
 
     if(!is.null(by.var)){
       stop("Cannot specify both by.var and date.var.")
-    }
-    else{
+    }    else{
       by.var <- date.var
     }
   }
@@ -270,12 +269,10 @@ backtest <- function(x,
   
   if(is.null(by.var)){
     x$by.factor <- factor(1)
-  }
-  else{
+  }  else{
     if(is.null(date.var)){
       x$by.factor <- categorize(x[[by.var]], n = buckets[2])
-    }
-    else{
+    }    else{
       x$by.factor <- categorize(x[[by.var]], n = buckets[2], is.date = TRUE)
     }
   }
@@ -286,20 +283,20 @@ backtest <- function(x,
       x[in.var] <- as.factor(x[in.var])
   }
   
-  ## Make sure in.var is a factor / factorized... by looping over in.var
-  ## I think the below is poorly done. Can't we just use a certain command to 
-  ## coerce all to be factors or a command to factorize all entries?
-  in.factor <- data.frame(array(dim = c(nrow(x), length(in.var)), dimnames = list(NULL,in.var)))
+
   
+  ## Make sure in.var is a factor / factorized... by looping over in.var
+  in.factor <- data.frame(array(dim = c(nrow(x), length(in.var)), dimnames = list(NULL,in.var)))
+  print(length(in.factor$smi))
   ## Intialize weights
   x$weight <- 1
-  
+
   ## Build buckets
   for(i in in.var){
     
     ## If in.var is not a factor (is numeric)
     if(!is.factor(x[[i]])){
-      ## we should explain what this huge pile of messy code is doing?
+      
       if(by.period && !all(tapply(x[[i]], x[[date.var]],
                                           function(x){
                                             if(sum(!is.na(x)) < buckets[1]){
@@ -313,7 +310,6 @@ backtest <- function(x,
       }
       
       ## If we are doing by period, form buckets for every date 
-      ## we should explain what this huge pile of messy code is doing?
       if(by.period){
         in.factor[[i]] <- as.factor(unsplit(lapply(split(x[[i]], x[[date.var]]),
                                                    function(x){
@@ -323,7 +319,6 @@ backtest <- function(x,
       }
       
       ## If we are not doing by period bucketizing, form all buckets simultaneously
-      ## so before reading this code, understand categorize
       else{
         in.factor[[i]] <- categorize(x[[i]], n = buckets[1])
       }
@@ -343,11 +338,10 @@ backtest <- function(x,
                    "(usually synthesized) data."))
       }
           
-      ## Recalculate weights based on overlaps
-      ## PAY ATTENTION OVERLAPPING PORTFOLIO GROUP: This is where we come in here
-      ## but main change should happen in overlaps.compute
-      
+      ## Recalculate weights based on overlaps: Overlapping portfolios
+      print(dim(x))
       if(overlaps > 1){
+        print(length(in.factor[[i]]))
         levels(in.factor[[i]])[1]                  <- "low"
         levels(in.factor[[i]])[buckets[1]]         <- "high"
         ## rename to "mid" all levels that are not low or high 
@@ -356,21 +350,25 @@ backtest <- function(x,
         in.factor.col <- paste("in.factor.", i, sep = "")
         ## create a new column in x
         x[[in.factor.col]] <- in.factor[[i]]
-        ## The below command does not work. Check overlaps.commute
+        print(length(in.factor[[i]]))
+        print("before overlaps.compute")
+        print(dim(x))
         x <- overlaps.compute(x, in.factor.col, date.var, id.var, overlaps)
+        print("after overlaps.compute")
+        print(dim(x))
+        print(length(in.factor[[i]]))
       }
     }
 
-    
     ## If the in.var is a factor, just set in.factor to the in.var
-
     else{
       in.factor[[i]] <- x[[i]]
     }
   }
   
-
-  
+  print("at least backtest.function does not have problem")
+  print(length(in.factor$smi))
+  print(dim(x))
   invisible(backtest.compute(x, in.factor, ret.var, by.var, date.var,
                              natural, by.specified, do.spread, id.var,
                              by.period, overlaps)) 

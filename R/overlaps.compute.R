@@ -15,9 +15,11 @@
 overlaps.compute <- function(x, in.factor, date.var, id.var, overlaps){
 
   ## Calculating the weights of each security within a single period
-  
+  print("before tribucket")
+  print(dim(x))
   x$weight <- tribucket(x, in.factor, date.var)
-  
+  print("after tribucket")
+  print(dim(x))
   ## Creating a per period weight matrix from x$weight
   
   weight.matrix <- data.frame(x[[date.var]], x[[id.var]], x$weight)
@@ -30,9 +32,16 @@ overlaps.compute <- function(x, in.factor, date.var, id.var, overlaps){
 
   true.weight <- subset(true.weight, !is.na(true.weight$weight))
   true.weight$weight <- tribucket(true.weight, "weight", date.var, scale = TRUE)
-
-  x <- merge(true.weight, x)
+  print("before merge")
+  print("dim of true.weight is")
+  print(dim(true.weight))
+  print(dim(x))
+  x <- merge(true.weight, x, all.y = TRUE)
+  print("after merge")
+  print(dim(x))
 }
+
+## Why there is not a single word of comment here for this helper function?...
 
 tribucket <- function(x, in.factor, date.var, scale = FALSE){
 

@@ -7,24 +7,24 @@
 #' @param x is a numeric vector
 #' @param x.factor is a factor for \code{x}
 #' @param y.factor is a factor for \code{x}
-#' @param compute compute
+#' @param compute is a function to apply on the list
 #' @param ... additional arguments to be passed on
 #' 
 #' @return a two-dimensional array of the results, with the levels of \code{x.factor} 
 #'         and \code{y.factor} as dimnames.
 
-bucketize <- function(x, x.factor, y.factor, compute, ...){
-
+bucketize <- function(xr, x.factor, y.factor, compute, ...){
+  print(c(length(xr), length(x.factor), length(y.factor)))  
   stopifnot(
-            is.numeric(x),
-            is.factor(x.factor),
-            is.factor(y.factor),
-            all.equal(length(x), length(x.factor)),
-            all.equal(length(x),length(y.factor)),
-            is.function(compute)
-            )
-
-  data <- tapply(x, list(y.factor, x.factor), compute, ...)
+              is.numeric(xr),
+              is.factor(x.factor),
+              is.factor(y.factor),
+              all.equal(length(xr), length(x.factor)),
+              all.equal(length(xr),length(y.factor)),
+              is.function(compute)
+              )
+  
+    data <- tapply(xr, list(y.factor, x.factor), compute, ...)
 
   invisible(data)
 }
