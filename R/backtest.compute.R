@@ -96,9 +96,8 @@ backtest.compute <- function(x,
     ret.stats[r,"NA"]     <- sum(is.na(x[[r]]))
 
     ## Select in.var
-    i = colnames(in.factor)
-
-
+    for(i in colnames(in.factor)){
+      
       ## Bucketize means
  
       results[r,i, , ,"means"] <- bucketize(x[[r]], x.factor = temp.in.factor[[i]],
@@ -132,7 +131,7 @@ backtest.compute <- function(x,
                                        portfolio.factor = in.factor[[i]],
                                        date.factor = x$by.factor)
       }
-    
+    }
   }
     
   ## Create and return backtest object

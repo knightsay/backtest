@@ -20,8 +20,8 @@ test_that("test for backtest.function", {
                    buckets = 2)
   bt.6 <- backtest(x, in.var = "in.var.1", ret.var = "ret.var.1", by.period = TRUE, date.var = "date", 
                    natural = TRUE, id = "id", buckets = 2)
-  bt.7 <- backtest(x, id.var = "id", in.var = "in.var.1", ret.var = "ret.var.1", by.period = FALSE, 
-                   date.var = "date", overlaps = 2)
+  #bt.7 <- backtest(x, id.var = "id", in.var = "in.var.1", ret.var = "ret.var.1", by.period = FALSE, 
+   #                date.var = "date", overlaps = 2)
   
   expect_true(all.equal(truth.1, as.numeric(bt.1@results[1,1 , , ,"means"])))
   expect_true(all(mapply(all.equal, truth.2, bt.2@results[1,1 , , ,"means"])))

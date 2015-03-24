@@ -306,13 +306,13 @@ op <- options(digits = 1)
 
 <<smi.2 backtest>>=
 
-#bt <- backtest(starmine,
- #                    id.var = "id",
-  #                   date.var = "date",
-   #                  in.var = c("smi", "cap.usd"),
-    #                 ret.var = "ret.0.1.m",
-     #                natural = TRUE,
-      #               by.period = FALSE)
+bt <- backtest(starmine,
+               id.var = "id",
+               date.var = "date",
+               in.var = c("smi", "cap.usd"),
+               ret.var = "ret.0.1.m",
+               natural = TRUE,
+               by.period = FALSE)
 @ 
 
 <<echo=false>>=
