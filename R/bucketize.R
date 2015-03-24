@@ -14,7 +14,7 @@
 #'         and \code{y.factor} as dimnames.
 
 bucketize <- function(xr, x.factor, y.factor, compute, ...){
-  print(c(length(xr), length(x.factor), length(y.factor)))  
+  
   stopifnot(
               is.numeric(xr),
               is.factor(x.factor),

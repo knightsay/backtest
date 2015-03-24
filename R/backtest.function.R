@@ -287,7 +287,7 @@ backtest <- function(x,
   
   ## Make sure in.var is a factor / factorized... by looping over in.var
   in.factor <- data.frame(array(dim = c(nrow(x), length(in.var)), dimnames = list(NULL,in.var)))
-  print(length(in.factor$smi))
+  
   ## Intialize weights
   x$weight <- 1
 
@@ -339,9 +339,9 @@ backtest <- function(x,
       }
           
       ## Recalculate weights based on overlaps: Overlapping portfolios
-      print(dim(x))
+      
       if(overlaps > 1){
-        print(length(in.factor[[i]]))
+        
         levels(in.factor[[i]])[1]                  <- "low"
         levels(in.factor[[i]])[buckets[1]]         <- "high"
         ## rename to "mid" all levels that are not low or high 
@@ -350,13 +350,9 @@ backtest <- function(x,
         in.factor.col <- paste("in.factor.", i, sep = "")
         ## create a new column in x
         x[[in.factor.col]] <- in.factor[[i]]
-        print(length(in.factor[[i]]))
-        print("before overlaps.compute")
-        print(dim(x))
+       
         x <- overlaps.compute(x, in.factor.col, date.var, id.var, overlaps)
-        print("after overlaps.compute")
-        print(dim(x))
-        print(length(in.factor[[i]]))
+
       }
     }
 
@@ -366,9 +362,6 @@ backtest <- function(x,
     }
   }
   
-  print("at least backtest.function does not have problem")
-  print(length(in.factor$smi))
-  print(dim(x))
   invisible(backtest.compute(x, in.factor, ret.var, by.var, date.var,
                              natural, by.specified, do.spread, id.var,
                              by.period, overlaps)) 

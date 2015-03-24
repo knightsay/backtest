@@ -20,17 +20,17 @@ backtest.compute <- function(x,
                              id.var       = NULL,
                              by.period    = TRUE,
                              overlaps     = 1){
- 
+
   ## All in.var must have the same number of buckets.
   temp.in.factor = in.factor
-  print(dim(x))
+
   
   if(!isTRUE(length(unique(sapply(in.factor, function(x){length(levels(x))}))) == 1)){
     stop("All in.var's must have the same number of buckets.")
   }
   
   ## ret.var columns must be numeric
- 
+
   buckets <- length(levels(in.factor[[1]]))
   
   ## Function for bucketing NA values
@@ -41,7 +41,8 @@ backtest.compute <- function(x,
   
   ## Creating names
   ## create names for what?...
-  by.names <- levels(x$by.factor)
+
+   by.names <- levels(x$by.factor)
   	
   ## Create array for storing turnover.  Dimensions signify:
   ## 1. date
@@ -67,14 +68,14 @@ backtest.compute <- function(x,
                      levels(in.factor[[1]]), c("means", "counts", "trim.means", "NAs")))
                      
   ## Construct ret.stats array -- stats to return
-  
+
   ret.stats <- array(dim = c(length(ret.var), 6), dimnames =
                      list(ret.var, c("min", "max", "mean", "median",
                                      "sd", "NA")))                     
   for(r in ret.var){
 
     ## Trim out the most extreme 0.5% of ret.var values in x
-    print(dim(x))
+
     x[[r]] <- x[[r]] * x[["weight"]]
     trim.range <- quantile(x[[r]], c(0.0025, 0.9975), na.rm = TRUE)
     
@@ -97,15 +98,13 @@ backtest.compute <- function(x,
     ## Select in.var
     i = colnames(in.factor)
 
-      print("problem starts!")
-      print(length(temp.in.factor[[i]]))
-      
+
       ## Bucketize means
  
       results[r,i, , ,"means"] <- bucketize(x[[r]], x.factor = temp.in.factor[[i]],
                                             y.factor = x$by.factor,
                                             compute = weighted.mean, na.rm = TRUE)
-      print("problem solved?")
+
       
       ## Bucketize counts
       
